@@ -1,0 +1,6 @@
+.DS_Store
+*.swp
+rdoc
+pkg
+tmp
+.envygeeks_rbconf

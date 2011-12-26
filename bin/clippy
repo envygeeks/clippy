@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'clippy'
+
+##
+# Opts.
+do_return = nil
+did_cmd = nil
+OptionParser.new do |opts|
+  opts.banner = "Clippy v#{Clippy.version} by Envygeeks"
+  opts.on('--paste', 'Paste') { do_return = Clippy.paste }
+  opts.on('--help', 'This') { do_return = opts }
+  opts.on('--clear', 'Clear') { did_cmd = Clippy.clear }
+
+  opts.on('--copy', 'Copy') do
+    unless ARGV.count > 0
+      text = ARGF.readlines.join.gsub(/\n$/, '')
+    else
+      if ARGV.count > 1
+        raise(RuntimeError, 'More than one arg.', 'Clippy')
+      else
+        text = ARGV.first
+      end
+    end
+
+    did_cmd = Clippy.copy(text)
+  end
+
+  opts.on('--version', 'version') { do_return = Clippy.version }
+end.parse!
+
+if do_return.nil? and did_cmd.nil?
+  system("#{File.expand_path(__FILE__)} --help")
+else
+  if do_return
+    $stdout.puts do_return
+  end
+end
