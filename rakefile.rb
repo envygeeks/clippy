@@ -1,6 +1,8 @@
 require 'rubygems/package_task'
 require 'rake/testtask'
 
+task :default => [:test]
+
 Rake::TestTask.new do |tfile|
   tfile.verbose = true
   tfile.pattern = "tests/**/*.rb"
