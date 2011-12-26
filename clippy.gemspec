@@ -8,8 +8,12 @@ Gem::Specification.new do |spec|
   spec.version = Clippy.version
   spec.require_paths = ['lib']
   spec.executables = ['clippy']
-  spec.files = Dir.glob("lib/**/*")
-  spec.files+= Dir.glob("bin/**/*")
+  spec.files = Dir.glob('lib/**/*')
+  spec.files+= Dir.glob('bin/**/*')
+  spec.add_development_dependency('rspec')
+  spec.add_development_dependency('rake')
+  spec.add_development_dependency('minitest')
+  spec.add_development_dependency('cucumber')
   spec.authors = ['Jordon Bedwell', 'Nathaniel Davidson']
   spec.email = ['jordon@envygeeks.com', 'nathaniel.davidson@gmail.com']
   spec.homepage = 'https://github.com/envygeeks/clippy'
