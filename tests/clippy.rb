@@ -15,7 +15,7 @@ describe Clippy do
     Clippy.version.split(/\./).delete_if do
     |val|
       val =~ /pre\d{0,2}/
-    end.length.must_equal(2)
+    end.length.must_equal(3)
   end
 
   describe "when asked to copy, paste or clear" do
