@@ -22,7 +22,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.1.2'
+      '0.1.3'
     end
 
     def binary_exist?(bin)
@@ -32,6 +32,9 @@ class Clippy
     ##
     # Copy
     def copy(data)
+      ##
+      # For shit like Pidgin..
+      data.gsub!(/\n/, "\r\n")
       if RbConfig::CONFIG['host_os'] =~ /mswin/
         if system('clip /? 2>&1 1>&0')
           begin
