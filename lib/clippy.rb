@@ -3,6 +3,7 @@ require 'open3'
 
 if RbConfig::CONFIG['host_os'] =~ /mswin/
   require 'Win32API'
+  require 'tempfile'
 end
 
 class Clippy
@@ -21,7 +22,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.1.1'
+      '0.1.2'
     end
 
     def binary_exist?(bin)
