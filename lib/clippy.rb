@@ -63,7 +63,7 @@ class Clippy
             end
           end
         else
-          raise(UnknownClipboard, 'Could not find a clipboard util.')
+          raise(UnknownClipboard, 'Clippy requires xsel, xclip or pbcopy.')
         end
       end
 
