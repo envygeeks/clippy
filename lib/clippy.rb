@@ -9,12 +9,8 @@ end
 class Clippy
   private_class_method :new
 
-  ['UnsupportedOS', 'UnknownClipboard', 'InvalidEncoding'].each do |klass|
-    class_eval <<-CLASS
-      class #{klass} < StandardError
-        self
-      end
-    CLASS
+  [:UnsupportedOS, :UnknownClipboard, :InvalidEncoding].each do |status|
+    const_set(status, Class.new(StandardError))
   end
 
   class << self
