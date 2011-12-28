@@ -11,8 +11,8 @@ Requirements:
   Development:
     cucumber
     rake
-    rspec
     minitest
+    rspec-expectations
 
 All other distros should work with 1.8+
 

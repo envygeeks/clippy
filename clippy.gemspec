@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.executables = ['clippy']
   spec.files = Dir.glob('lib/**/*')
   spec.files+= Dir.glob('bin/**/*')
-  spec.add_development_dependency('rspec')
+  spec.add_development_dependency('rspec-expectations')
   spec.add_development_dependency('rake')
   spec.add_development_dependency('minitest')
   spec.add_development_dependency('cucumber')
