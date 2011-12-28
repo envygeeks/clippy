@@ -18,7 +18,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.1.3'
+      '0.2.0'
     end
 
     def binary_exist?(bin)
