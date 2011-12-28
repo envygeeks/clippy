@@ -75,7 +75,11 @@ class Clippy
     def paste(encoding = nil, which = nil)
       if defined? Encoding and encoding
         unless Encoding.list.map(&:to_s).include?(encoding)
-          raise(InvalidEncoding, 'The encoding you selected is unsupported')
+          if ['clipboard', 'primary', 'secondary'].include?(encoding)
+            which, encoding = encoding, nil
+          else
+            raise(InvalidEncoding, 'The encoding you selected is unsupported')
+          end
         end
       end
 
