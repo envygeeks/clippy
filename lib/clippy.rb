@@ -77,7 +77,7 @@ class Clippy
     ##
     # Paste
     def paste(encoding = nil, which = nil)
-      if defined? Encoding and encoding
+      if defined?(Encoding) && encoding
         unless Encoding.list.map(&:to_s).include?(encoding)
           if ['clipboard', 'primary', 'secondary'].include?(encoding)
             which, encoding = encoding, nil
@@ -124,7 +124,7 @@ class Clippy
         end
       end
 
-      if defined? Encoding
+      if defined?(Encoding)
         if data.encoding.name != Encoding.default_external
           data.encode(encoding ? encoding : Encoding.default_external)
         end
