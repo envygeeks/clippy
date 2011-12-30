@@ -28,7 +28,7 @@ class Clippy
     ##
     # Copy
     def copy(data)
-      unless data.is_a(String)
+      unless data.is_a?(String)
         raise(ArgumentError, 'Clippy can only copy a string')
       end
 
