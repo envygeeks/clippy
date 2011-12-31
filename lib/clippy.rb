@@ -52,7 +52,7 @@ class Clippy
         case true
         when binary_exist?('xsel')
           ['-p', '-b', '-s'].each do |opt|
-            Open3.popen3("xsel -i #{opt}") do |stdin|
+            Open3.popen3("xsel -i #{opt}") do |stdin, _, _|
               stdin << data
             end
           end
@@ -62,7 +62,7 @@ class Clippy
           end
         when binary_exist?('xclip')
           ['primary', 'secondary', 'clipboard'].each do |opt|
-            Open3.popen3("xclip -i -selection #{opt}") do |stdin|
+            Open3.popen3("xclip -i -selection #{opt}") do |stdin, _, _|
               stdin << data
             end
           end
@@ -102,11 +102,11 @@ class Clippy
             when 'secondary' then cmd+= ' -s'
           end
 
-          Open3.popen3(cmd) do |_, stdout|
+          Open3.popen3(cmd) do |_, stdout, _|
             data = stdout.read
           end
         when binary_exist?('pbpaste')
-          Open3.popen('pbpaste') do |_, stdout|
+          Open3.popen('pbpaste') do |_, stdout, _|
             data = stdout.read || ''
           end
         when binary_exist?('xclip')
@@ -118,7 +118,7 @@ class Clippy
             when 'secondary' then cmd+= ' secondary'
           end
 
-          Open3.popen3(cmd) do |_, stdout|
+          Open3.popen3(cmd) do |_, stdout, _|
             data = stdout.read || ''
           end
         end
