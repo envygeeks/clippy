@@ -27,14 +27,13 @@ Usage:
     Clippy.[paste, clear]
 
 ---
-Clippy v0.1 by Envygeeks
-  --paste    Paste
-  --help     This
-  --clear    Clear
-  --copy     Copy
+Clippy v0.1 by Envygeeks<br />
+  --paste    Paste<br />
+  --help     This<br />
+  --clear    Clear<br />
+  --copy     Copy<br />
   --version  Version
 
 ---
 I want to throw a big  thank you to Nathaniel (@firestar) who took the time to
-also build a Java version of clippy which will soon also be included as a
-fallback for Windows XP users.
+also build a Java version of clippy too.
