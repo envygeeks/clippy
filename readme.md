@@ -20,7 +20,7 @@ All other distros should work with 1.8+
     require 'clippy'
     Clippy.copy('#1')
     Clippy.paste and Clippy.clear
-
+<br />
 <pre>
     Clippy v0.1 by Envygeeks
     --paste    Paste
