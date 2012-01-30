@@ -13,11 +13,13 @@ All other distros should work with 1.8+
 
 ---
 Shell:
+
     clippy --copy '#1'
     echo '#2' |clippy --copy
     clipy --copy < 'file#3.txt'
 
 Ruby:
+
     require 'clippy'
     Clippy.copy('#1')
     Clippy.paste and Clippy.clear
