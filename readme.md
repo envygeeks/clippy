@@ -2,9 +2,7 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 
 ---
 * Requirements:
-  * Windows:
-    * Ruby1.9
-    * Windows Vista+
+  * Ruby1.9 (if on Windows)
 * Development:
   * Cucumber
   * Rake
@@ -14,17 +12,23 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 All other distros should work with 1.8+
 
 ---
-Usage:
-  Shell:
-    clippy --copy '#1'
-    echo '#2' |clippy --copy
-    clipy --copy < 'file#3.txt'
-  Ruby:
-    require 'clippy'
-    Clippy.copy('#1')
-    Clippy.paste and Clippy.clear
+Shell:
+  ```
+  clippy --copy '#1'
+  echo '#2' |clippy --copy
+  clipy --copy < 'file#3.txt'
+  ```
+
+Ruby:
+  ```
+  require 'clippy'
+  Clippy.copy('#1')
+  Clippy.paste and Clippy.clear
+  ```
 
 ---
+The commands for the included 'clippy' binary.
+
 <pre>
     Clippy v0.1 by Envygeeks
     --paste    Paste
