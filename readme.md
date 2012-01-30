@@ -1,4 +1,3 @@
----
 About:
 Clippy is a  cross-platform clipboard utility and script for Ruby.
 
