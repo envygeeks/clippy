@@ -28,11 +28,11 @@ Usage:
 
 ---
 Clippy v0.1 by Envygeeks<br />
-  --paste    Paste<br />
-  --help     This<br />
-  --clear    Clear<br />
-  --copy     Copy<br />
-  --version  Version
+&nbsp;&nbsp;--paste&nbsp;&nbsp;&nbsp;&nbsp;Paste<br />
+&nbsp;&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;This<br />
+&nbsp;&nbsp;--clear&nbsp;&nbsp;&nbsp;&nbsp;Clear<br />
+&nbsp;&nbsp;--copy&nbsp;&nbsp;&nbsp;&nbsp;Copy<br />
+&nbsp;&nbsp;--version&nbsp;&nbsp;&nbsp;&nbsp;Version
 
 ---
 I want to throw a big  thank you to Nathaniel (@firestar) who took the time to
