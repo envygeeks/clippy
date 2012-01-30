@@ -11,7 +11,6 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 
 All other distros should work with 1.8+
 
----
     # Shell (Linux and Windows)
     clippy --copy '#1'
     echo '#2' |clippy --copy
@@ -21,9 +20,6 @@ All other distros should work with 1.8+
     require 'clippy'
     Clippy.copy('#1')
     Clippy.paste and Clippy.clear
-
----
-The commands for the included 'clippy' binary.
 
 <pre>
     Clippy v0.1 by Envygeeks
