@@ -1,7 +1,8 @@
 require 'rbconfig'
-require 'open3'
 
-if RbConfig::CONFIG['host_os'] =~ /mswin/
+unless RbConfig::CONFIG['host_os'] =~ /mswin/
+  require 'open3'
+else
   require 'Win32API'
   require 'tempfile'
 end
