@@ -18,7 +18,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.2.0'
+      '0.2.1'
     end
 
     def binary_exist?(bin)
@@ -77,12 +77,17 @@ class Clippy
     ##
     # Paste
     def paste(encoding = nil, which = nil)
-      if defined?(Encoding) && encoding
-        unless Encoding.list.map(&:to_s).include?(encoding)
-          if ['clipboard', 'primary', 'secondary'].include?(encoding)
-            which, encoding = encoding, nil
+      if encoding
+        if %w(clipboard primary secondary).include?(encoding)
+          which, encoding = encoding, nil
+        else
+          if defined?(Encoding)
+            unless Encoding.list.map(&:to_s).include?(encoding)
+              raise(InvalidEncoding, 'The encoding you selected is unsupported')
+            end
           else
-            raise(InvalidEncoding, 'The encoding you selected is unsupported')
+            encoding = nil
+            warn('Encoding library wasn\'t found, skipping the encode')
           end
         end
       end
