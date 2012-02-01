@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.name = 'clippy'
   spec.has_rdoc = false
   spec.version = Clippy.version
-  spec.require_paths = 'lib'
-  spec.executables = 'clippy'
+  spec.require_paths = ['lib']
+  spec.executables = ['clippy']
   spec.add_development_dependency('rspec-expectations')
   spec.add_development_dependency('rake')
   spec.add_development_dependency('minitest')
