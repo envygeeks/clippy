@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$:.unshift('../lib')
 require 'optparse'
 require 'clippy'
 
@@ -8,6 +9,7 @@ do_return = nil
 did_cmd = nil
 OptionParser.new do |opts|
   opts.banner = "Clippy v#{Clippy.version} by Envygeeks"
+  opts.on('--no-encoding', 'Encoding') { Clippy.encode = false }
   opts.on('--paste', 'Paste') { do_return = Clippy.paste }
   opts.on('--help', 'This') { do_return = opts }
   opts.on('--clear', 'Clear') { did_cmd = Clippy.clear }

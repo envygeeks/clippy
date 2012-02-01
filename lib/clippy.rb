@@ -8,6 +8,7 @@ end
 
 class Clippy
   private_class_method :new
+  @@encode = true
 
   [:UnsupportedOS, :UnknownClipboard, :InvalidEncoding].each do |status|
     const_set(status, Class.new(StandardError))
@@ -23,6 +24,10 @@ class Clippy
 
     def binary_exist?(bin)
       system("which #{bin} > /dev/null 2>&1")
+    end
+
+    def encode=(value)
+      @@encode = value if [TrueClass, FalseClass].include?(value.class)
     end
 
     ##
@@ -81,13 +86,13 @@ class Clippy
         if %w(clipboard primary secondary).include?(encoding)
           which, encoding = encoding, nil
         else
-          if defined?(Encoding)
+          if @@encode && defined?(Encoding)
             unless Encoding.list.map(&:to_s).include?(encoding)
               raise(InvalidEncoding, 'The encoding you selected is unsupported')
             end
           else
             encoding = nil
-            warn('Encoding library wasn\'t found, skipping the encode')
+            warn('Encoding library wasn\'t found, skipping the encode') unless !@@encode
           end
         end
       end
@@ -129,7 +134,7 @@ class Clippy
         end
       end
 
-      if defined?(Encoding)
+      if @@encode && defined?(Encoding)
         if data.encoding.name != Encoding.default_external
           data.encode(encoding ? encoding : Encoding.default_external)
         end
