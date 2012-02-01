@@ -16,7 +16,7 @@ OptionParser.new do |opts|
 
   opts.on('--copy', 'Copy') do
     unless ARGV.count > 0
-      text = ARGF.readlines.join.gsub(/\n$/, '')
+      text = ARGF.readlines.join
     else
       if ARGV.count > 1
         raise(RuntimeError, 'More than one arg.', 'Clippy')
