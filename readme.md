@@ -2,7 +2,9 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 
 ---
 * Requirements:
-  * Ruby1.9 (if on Windows)
+  * Ruby1.9+ or jRuby in 1.9 (Windows)
+  * Ruby1.8.6+ (For Unix and Linux))
+  * All platforms support jRuby in 1.8 or 1.9 mode except Windows.
 * Development:
   * Cucumber
   * Rake
