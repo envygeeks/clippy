@@ -1,6 +1,5 @@
-require 'rbconfig'
-
-unless RbConfig::CONFIG['host_os'] =~ /mswin/
+require 'rbconfig' unless defined?(RbConfig)
+unless RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
   require 'open3'
 else
   require 'Win32API'
@@ -20,7 +19,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.2.2'
+      '0.2.3'
     end
 
     def binary_exist?(bin)
@@ -41,8 +40,8 @@ class Clippy
       ##
       # For shit like Pidgin..
       data.gsub!(/\n/, "\r\n")
-      if RbConfig::CONFIG['host_os'] =~ /mswin/
-        if system('clip /? 2>&1 1>&0')
+      if RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
+        if system('clip /? > NUL')
           begin
             tmpfile = Tempfile.new('clippy')
             tmpfile.write(data)
@@ -145,7 +144,7 @@ class Clippy
     end
 
     def clear
-      if RbConfig::CONFIG['host_os'] =~ /mswin/
+      if RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
         Win32API.new('user32', 'OpenClipboard', 'L', 'I').call(0)
           Win32API.new('user32', 'EmptyClipboard', [], 'I').call
         Win32API.new('user32', 'CloseClipboard', [], 'I').call
