@@ -19,7 +19,7 @@ class Clippy
     ##
     # Version.
     def version
-      '0.2.3'
+      '0.2.4'
     end
 
     def binary_exist?(bin)
@@ -33,9 +33,8 @@ class Clippy
     ##
     # Copy
     def copy(data)
-      unless data.is_a?(String)
-        raise(ArgumentError, 'Clippy can only copy a string')
-      end
+      # Just convert it ourselves right now.....
+      data = data.to_s unless data.is_a?(String)
 
       ##
       # For shit like Pidgin..

@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.summary = 'A utility to access the systems clipboard.'
   spec.description = 'A utility to access the systems clipboard.'
   spec.files = Dir.glob('lib/**/*') + Dir.glob('bin/**/*') + Dir.glob('test/**/*') + Dir.glob('features/**/*')
-  spec.files+= %w(readme.md license.txt rakefile.rb gemfile.rb changelog.md)
+  spec.files+= %w(Readme.md License Rakefile Gemfile changelog.md)
 
   if RUBY_PLATFORM =~ /mswin/
     spec.required_ruby_version = '>= 1.9.1'
