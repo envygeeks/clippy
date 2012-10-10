@@ -14,16 +14,12 @@ OptionParser.new do |opts|
   opts.on('--clear', 'Clear') { did_cmd = Clippy.clear }
 
   opts.on('--copy', 'Copy') do
-    unless ARGV.count > 0
-      text = ARGF.readlines.join
-    else
-      if ARGV.count > 1
-        raise(RuntimeError, 'More than one arg.', 'Clippy')
-      else
-        text = ARGV.first.dup
-      end
+    if ARGV.count > 1
+      raise RuntimeError, "More than one arg is not allowable.", "Clippy"
     end
 
+    text = ARGF.readlines.join if ARGV.count == 0
+    text = ARGV.first.dup if ARGV.count == 1
     did_cmd = Clippy.copy(text)
   end
 
