@@ -1,33 +1,39 @@
 Clippy is a  cross-platform clipboard utility and script for Ruby.
 
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/envygeeks/clippy)
+
 ---
 * Requirements:
-  * Ruby1.9+ or jRuby in 1.9 (Windows)
-  * Ruby1.8.6+ (For Unix and Linux))
-  * All platforms support jRuby in 1.8 or 1.9 mode except Windows.
+  * Ruby1.9+ or JRuby in 1.9+
+  * Any Linux distro with xsel or xclip.
+  * Any OS X version that supports pbcopy.
+  * At least Windows Vista if you are on Windows.
 * Development:
-  * Cucumber
   * Rake
   * Minitest
-  * RSPEC-Expectations
 
-All other distros should work with 1.8+
+---
+Examples:
 
-    # Shell (Linux and Windows)
-    clippy --copy '#1'
-    echo '#2' |clippy --copy
-    clipy --copy < 'file#3.txt'
-    
-    # Ruby1.8+
-    require 'clippy'
-    Clippy.copy('#1')
-    Clippy.paste and Clippy.clear
-<br />
+```bash
+clippy --copy "#1"
+clippy --paste
+echo "#2" |clippy --copy
+clippy --copy < "file#3.txt"
+```
+
+```ruby
+require 'clippy'
+Clippy.copy('#1')
+Clippy.paste and Clippy.clear
+```
+
 <pre>
-    Clippy v0.1 by Envygeeks
-    --paste    Paste
-    --help     This
-    --clear    Clear
-    --copy     Copy
-    --version  Version
+Clippy v1.0.0 by Envygeeks
+  --no-encoding   Encoding
+  --paste         Paste
+  --help          This
+  --clear         Clear
+  --copy          Copy
+  --version       Version
 </pre>
