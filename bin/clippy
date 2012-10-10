@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.expand_path('../../lib', __FILE__))
-require 'optparse'
-require 'clippy'
+$:.unshift(File.expand_path("../../lib", __FILE__))
+require "optparse"
+require "clippy"
 
 do_return = nil
 did_cmd = nil
 OptionParser.new do |opts|
   opts.banner = "Clippy v#{Clippy.version} by Envygeeks"
-  opts.on('--no-encoding', 'Encoding') { Clippy.encode = false }
-  opts.on('--paste', 'Paste') { do_return = Clippy.paste }
-  opts.on('--help', 'This') { do_return = opts }
-  opts.on('--clear', 'Clear') { did_cmd = Clippy.clear }
+  opts.on("--no-encoding", "Encoding") { Clippy.encode = false }
+  opts.on("--paste", "Paste") { do_return = Clippy.paste }
+  opts.on("--help", "This") { do_return = opts }
+  opts.on("--clear", "Clear") { did_cmd = Clippy.clear }
 
-  opts.on('--copy', 'Copy') do
+  opts.on("--copy", "Copy") do
     if ARGV.count > 1
       raise RuntimeError, "More than one arg is not allowable.", "Clippy"
     end
@@ -23,7 +23,7 @@ OptionParser.new do |opts|
     did_cmd = Clippy.copy(text)
   end
 
-  opts.on('--version', 'version') { do_return = Clippy.version }
+  opts.on("--version", "version") { do_return = Clippy.version }
 end.parse!
 
 if do_return.nil? and did_cmd.nil?
