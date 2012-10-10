@@ -1,9 +1,8 @@
 $:.unshift(File.expand_path("../../lib", __FILE__))
-unless defined?(Gem) then require 'rubygems' end
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'minitest/spec'
-require 'clippy'
+require "minitest/autorun"
+require "minitest/pride"
+require "minitest/spec"
+require "clippy"
 
 describe Clippy do subject { Clippy }
   it "must have a proper version" do
