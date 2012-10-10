@@ -1,9 +1,21 @@
-require 'rbconfig' unless defined?(RbConfig)
-unless RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
-  require 'open3'
+require 'rbconfig'
+
+if RbConfig::CONFIG['host_os'] !~ /mswin|mingw32/
+  require "open3"
 else
-  require 'Win32API'
-  require 'tempfile'
+  require "Win32API"
+  require "tempfile"
+end
+
+class Object
+  ##
+  # ---
+  # Hood jacked from Rails.
+  ##
+
+  def blank?
+    (respond_to?(:empty?)) ? (empty?) : (!self)
+  end
 end
 
 class Clippy
@@ -15,31 +27,39 @@ class Clippy
   end
 
   class << self
-
-    ##
-    # Version.
+    VERSION = "0.2.4"
     def version
-      '0.2.4'
+      VERSION
     end
 
-    def binary_exist?(bin)
-      system("which #{bin} > /dev/null 2>&1")
+    ##
+    # ---
+    # Doesn't work on Windows.
+    ##
+
+    def binary_exist?(bin = nil)
+      if bin
+        system("which #{bin} > /dev/null 2>&1")
+      end
     end
 
     def encode=(value)
-      @@encode = value if [TrueClass, FalseClass].include?(value.class)
+      if [TrueClass, FalseClass].include?(value.class)
+        @@encode = value
+      end
     end
 
-    ##
-    # Copy
     def copy(data)
-      # Just convert it ourselves right now.....
-      data = data.to_s unless data.is_a?(String)
-
       ##
-      # For shit like Pidgin..
+      # ---
+      # Always convert to a string and convert \n to \r\n because shit like
+      # Pidgin, Empathy, aMSN and other fucking clients have no idea what the
+      # hell \n is for, that or they just ignore it like jackasses, jackasses.
+
+      data = data.to_s unless data.is_a?(String)
       data.gsub!(/\n/, "\r\n")
-      if RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
+
+      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
         if system('clip /? > NUL')
           begin
             tmpfile = Tempfile.new('clippy')
@@ -50,100 +70,142 @@ class Clippy
             tmpfile.close(true)
           end
         else
-          raise(UnsupportedOS, 'Your Windows version is too old.')
+          raise(UnsupportedOS, "Your Windows version is too old.", "Clippy")
         end
       else
+        status = 0
         case true
-        when binary_exist?('xsel')
-          ['-p', '-b', '-s'].each do |opt|
-            Open3.popen3("xsel -i #{opt}") do |stdin, _, _|
-              stdin << data
+          ##
+          # ---
+          # xsel is a Linux utility.
+          # apt-get install xsel.
+
+          when binary_exist?('xsel')
+            ['-p', '-b', '-s'].each do |opt|
+              Open3.popen3("xsel -i #{opt}") do |stdin, _, _, thread|
+                stdin << data
+                stdin.close
+                status = thread.value
+              end
             end
-          end
-        when binary_exist?('pbcopy')
-          Open3.popen3('pbcopy') do |stdin|
-            stdin << data
-          end
-        when binary_exist?('xclip')
-          ['primary', 'secondary', 'clipboard'].each do |opt|
-            Open3.popen3("xclip -i -selection #{opt}") do |stdin, _, _|
+
+          ##
+          # ---
+          # pbpaste is for Mac's though it could change.
+          # I don't know if it has multiple-boards.
+          ##
+
+          when binary_exist?('pbcopy')
+            Open3.popen3('pbcopy') do |stdin, _, _, thread|
               stdin << data
+              stdin.close
+              status = thread.value
             end
-          end
+
+          ##
+          # ---
+          # xclip is a Linux utitily.
+          # apt-get install xclip.
+          ##
+
+          when binary_exist?('xclip')
+            ['primary', 'secondary', 'clipboard'].each do |opt|
+              Open3.popen3("xclip -i -selection #{opt}") do
+              |stdin, _, _, thread|
+                stdin << data
+                stdin.close
+                status = thread.value
+              end
+            end
         else
           raise(UnknownClipboard, 'Clippy requires xsel, xclip or pbcopy.')
         end
       end
 
-      ((data.nil? or data.empty?)?(false):(data))
+      (status != 0) ? (false) : (data)
     end
 
-    ##
-    # Paste
     def paste(encoding = nil, which = nil)
-      if encoding
-        if %w(clipboard primary secondary).include?(encoding)
-          which, encoding = encoding, nil
-        else
-          if @@encode && defined?(Encoding)
-            unless Encoding.list.map(&:to_s).include?(encoding)
-              raise(InvalidEncoding, 'The encoding you selected is unsupported')
-            end
-          else
-            encoding = nil
-            warn('Encoding library wasn\'t found, skipping the encode') unless !@@encode
+      which = "clipboard" if encoding.blank? && which.blank?
+      if %w(clipboard primary secondary).include?(encoding)
+        which, encoding = encoding, nil
+      else
+        if encoding && @@encode && defined?(Encoding)
+          unless Encoding.list.map(&:to_s).include?(encoding)
+            raise InvalidEncoding, "Unsupported encoding selected", "Clippy"
           end
         end
       end
 
-      if RbConfig::CONFIG['host_os'] =~ /mswin/
+      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
         Win32API.new('user32', 'OpenClipboard', 'L', 'I').call(0)
           data = Win32API.new('user32', 'GetClipboardData', 'I', 'P').call(1) || ''
         Win32API.new('user32', 'CloseClipboard', [], 'I').call
       else
         case true
-        when binary_exist?('xsel')
-          cmd = 'xsel -o'
+          ##
+          # ---
+          # xsel is a Linux utility.
+          # apt-get install xsel.
 
-          case which
-            when 'clipboard' then cmd+= ' -b'
-            when 'primary' then cmd+= ' -p'
-            when 'secondary' then cmd+= ' -s'
-          end
+          when binary_exist?('xsel')
+            cmd, data = 'xsel -o', ""
 
-          Open3.popen3(cmd) do |_, stdout, _|
-            data = stdout.read
-          end
-        when binary_exist?('pbpaste')
-          Open3.popen('pbpaste') do |_, stdout, _|
-            data = stdout.read || ''
-          end
-        when binary_exist?('xclip')
-          cmd = 'xclip -o'
+            case which
+              when 'clipboard' then cmd+= ' -b'
+              when 'primary' then cmd+= ' -p'
+              when 'secondary' then cmd+= ' -s'
+            end
 
-          case which
-            when 'clipboard' then cmd+= ' clipboard'
-            when 'primary' then cmd+= ' primary'
-            when 'secondary' then cmd+= ' secondary'
-          end
+            Open3.popen3(cmd) { |_, stdout, _|
+              data = stdout.read }
 
-          Open3.popen3(cmd) do |_, stdout, _|
-            data = stdout.read || ''
-          end
+          ##
+          # ---
+          # pbpaste is for Mac's though it could change.
+          # I don't know if it has multiple-boards.
+          ##
+
+          when binary_exist?('pbpaste')
+            data = ""
+
+            Open3.popen('pbpaste') { |_, stdout, _|
+              data = stdout.read || '' }
+
+          ##
+          # ---
+          # xclip is a Linux utitily.
+          # apt-get install xclip.
+          ##
+
+          when binary_exist?('xclip')
+            cmd, data = 'xclip -o -selection', ""
+
+            case which
+              when 'clipboard' then cmd+= ' clipboard'
+              when 'primary' then cmd+= ' primary'
+              when 'secondary' then cmd+= ' secondary'
+            end
+
+            Open3.popen3(cmd) do |_, stdout, _|
+              data = stdout.read || ''
+            end
+        else
+          raise RuntimeError, "Unable to find a supported clipboard", "Clippy"
         end
       end
 
-      if @@encode && defined?(Encoding)
+      if @@encode && defined?(Encoding) && encoding
         if data.encoding.name != Encoding.default_external
-          data.encode(encoding ? encoding : Encoding.default_external)
+          data.encode(encoding)
         end
       end
 
-      ((data.nil? or data.empty?)?(false):(data))
+      (data.blank?) ? (nil) : (data)
     end
 
     def clear
-      if RbConfig::CONFIG['host_os'] =~ /mswin/ || RbConfig::CONFIG['host_os'] == 'mingw32'
+      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
         Win32API.new('user32', 'OpenClipboard', 'L', 'I').call(0)
           Win32API.new('user32', 'EmptyClipboard', [], 'I').call
         Win32API.new('user32', 'CloseClipboard', [], 'I').call
