@@ -1,6 +1,6 @@
-require 'rbconfig'
+require "rbconfig"
 
-if RbConfig::CONFIG['host_os'] !~ /mswin|mingw32/
+if RbConfig::CONFIG["host_os"] !~ /mswin|mingw32/
   require "open3"
 else
   require "Win32API"
@@ -27,7 +27,7 @@ class Clippy
   end
 
   class << self
-    VERSION = "0.2.4"
+    VERSION = "1.0.0"
     def version
       VERSION
     end
@@ -59,10 +59,10 @@ class Clippy
       data = data.to_s unless data.is_a?(String)
       data.gsub!(/\n/, "\r\n")
 
-      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
-        if system('clip /? > NUL')
+      if RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
+        if system("clip /? > NUL")
           begin
-            tmpfile = Tempfile.new('clippy')
+            tmpfile = Tempfile.new("clippy")
             tmpfile.write(data)
             tmpfile.flush
             system("clip < #{tmpfile.path}")
@@ -80,8 +80,8 @@ class Clippy
           # xsel is a Linux utility.
           # apt-get install xsel.
 
-          when binary_exist?('xsel')
-            ['-p', '-b', '-s'].each do |opt|
+          when binary_exist?("xsel")
+            ["-p", "-b", "-s"].each do |opt|
               Open3.popen3("xsel -i #{opt}") do |stdin, _, _, thread|
                 stdin << data
                 stdin.close
@@ -95,8 +95,8 @@ class Clippy
           # I don't know if it has multiple-boards.
           ##
 
-          when binary_exist?('pbcopy')
-            Open3.popen3('pbcopy') do |stdin, _, _, thread|
+          when binary_exist?("pbcopy")
+            Open3.popen3("pbcopy") do |stdin, _, _, thread|
               stdin << data
               stdin.close
               status = thread.value
@@ -108,8 +108,8 @@ class Clippy
           # apt-get install xclip.
           ##
 
-          when binary_exist?('xclip')
-            ['primary', 'secondary', 'clipboard'].each do |opt|
+          when binary_exist?("xclip")
+            ["primary", "secondary", "clipboard"].each do |opt|
               Open3.popen3("xclip -i -selection #{opt}") do
               |stdin, _, _, thread|
                 stdin << data
@@ -118,7 +118,7 @@ class Clippy
               end
             end
         else
-          raise(UnknownClipboard, 'Clippy requires xsel, xclip or pbcopy.')
+          raise(UnknownClipboard, "Clippy requires xsel, xclip or pbcopy.")
         end
       end
 
@@ -137,10 +137,10 @@ class Clippy
         end
       end
 
-      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
-        Win32API.new('user32', 'OpenClipboard', 'L', 'I').call(0)
-          data = Win32API.new('user32', 'GetClipboardData', 'I', 'P').call(1) || ''
-        Win32API.new('user32', 'CloseClipboard', [], 'I').call
+      if RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
+        Win32API.new("user32", "OpenClipboard", "L", "I").call(0)
+          data = Win32API.new("user32", "GetClipboardData", "I", "P").call(1) || ""
+        Win32API.new("user32", "CloseClipboard", [], "I").call
       else
         case true
           ##
@@ -148,13 +148,13 @@ class Clippy
           # xsel is a Linux utility.
           # apt-get install xsel.
 
-          when binary_exist?('xsel')
-            cmd, data = 'xsel -o', ""
+          when binary_exist?("xsel")
+            cmd, data = "xsel -o", ""
 
             case which
-              when 'clipboard' then cmd+= ' -b'
-              when 'primary' then cmd+= ' -p'
-              when 'secondary' then cmd+= ' -s'
+              when "clipboard" then cmd+= " -b"
+              when "primary" then cmd+= " -p"
+              when "secondary" then cmd+= " -s"
             end
 
             Open3.popen3(cmd) { |_, stdout, _|
@@ -166,11 +166,11 @@ class Clippy
           # I don't know if it has multiple-boards.
           ##
 
-          when binary_exist?('pbpaste')
+          when binary_exist?("pbpaste")
             data = ""
 
-            Open3.popen('pbpaste') { |_, stdout, _|
-              data = stdout.read || '' }
+            Open3.popen("pbpaste") { |_, stdout, _|
+              data = stdout.read || "" }
 
           ##
           # ---
@@ -178,17 +178,17 @@ class Clippy
           # apt-get install xclip.
           ##
 
-          when binary_exist?('xclip')
-            cmd, data = 'xclip -o -selection', ""
+          when binary_exist?("xclip")
+            cmd, data = "xclip -o -selection", ""
 
             case which
-              when 'clipboard' then cmd+= ' clipboard'
-              when 'primary' then cmd+= ' primary'
-              when 'secondary' then cmd+= ' secondary'
+              when "clipboard" then cmd+= " clipboard"
+              when "primary" then cmd+= " primary"
+              when "secondary" then cmd+= " secondary"
             end
 
             Open3.popen3(cmd) do |_, stdout, _|
-              data = stdout.read || ''
+              data = stdout.read || ""
             end
         else
           raise RuntimeError, "Unable to find a supported clipboard", "Clippy"
@@ -205,12 +205,12 @@ class Clippy
     end
 
     def clear
-      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw32/
-        Win32API.new('user32', 'OpenClipboard', 'L', 'I').call(0)
-          Win32API.new('user32', 'EmptyClipboard', [], 'I').call
-        Win32API.new('user32', 'CloseClipboard', [], 'I').call
+      if RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
+        Win32API.new("user32", "OpenClipboard", "L", "I").call(0)
+          Win32API.new("user32", "EmptyClipboard", [], "I").call
+        Win32API.new("user32", "CloseClipboard", [], "I").call
       else
-        if copy('')
+        if copy("")
           return true
         end
       end
