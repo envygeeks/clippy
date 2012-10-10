@@ -1,4 +1,4 @@
-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '../lib')))
+$:.unshift(File.expand_path("../../lib", __FILE__))
 unless defined?(Gem) then require 'rubygems' end
 require 'minitest/autorun'
 require 'minitest/pride'
