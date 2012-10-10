@@ -2,32 +2,32 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '../lib')))
 unless defined?(Gem) then require 'rubygems' end
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'minitest/spec'
 require 'clippy'
 
-class TestClippy < MiniTest::Unit::TestCase
-
-  def test1_version
-    Clippy.version.split(/\./).delete_if do
-    |val|
-      val =~ /pre\d{0,2}/
-    end.length.must_equal(3)
+describe Clippy do subject { Clippy }
+  it "must have a proper version" do
+    Clippy.version.split(".").delete_if { |val|
+      val =~ /pre\d+/ }.length.must_equal(3)
   end
 
-  def test2_copy
-    test1 = Clippy.copy("Test1")
-    test1.must_equal("Test1")
-    Clippy.paste.must_equal("Test1")
+  describe ".copy" do
+    it "must be able to copy" do
+      subject.copy("example").must_equal("example")
+    end
   end
 
-  def test3_paste
-    test1 = Clippy.copy("Test2")
-    test1.must_equal("Test2")
-    Clippy.paste.must_equal("Test2")
+  describe ".paste" do
+    it "must be able to paste" do
+      subject.copy("example")
+      subject.paste.must_equal("example")
+    end
   end
 
-  def test4_clear
-    Clippy.copy("Test2")
-    Clippy.clear.must_equal(false)
-    Clippy.paste.must_equal(false)
+  describe ".clear" do
+    it "should be able to clear the clipboard" do
+      subject.copy("example")
+      subject.clear.must_equal(true)
+    end
   end
 end
