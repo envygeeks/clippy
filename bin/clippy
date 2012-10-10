@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
-$:.unshift('../lib')
+
+$:.unshift(File.expand_path('../../lib', __FILE__))
 require 'optparse'
 require 'clippy'
 
-##
-# Opts.
 do_return = nil
 did_cmd = nil
 OptionParser.new do |opts|
