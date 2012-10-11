@@ -127,7 +127,7 @@ class Clippy
 
     def paste(encoding = nil, which = nil)
       which = "clipboard" if encoding.blank? && which.blank?
-      if %w(clipboard primary secondary).include?(encoding)
+      if ["clipboard", "primary", "secondary"].include?(encoding)
         which, encoding = encoding, nil
       else
         if encoding && @@encode && defined?(Encoding)
