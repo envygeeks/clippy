@@ -1,5 +1,5 @@
 class Clippy
-  class << self
+  module Linux
     def copy(data)
       data = data.to_s unless data.is_a?(String)
       data.gsub!(/\n/, "\r\n")
@@ -55,3 +55,5 @@ class Clippy
     end
   end
 end
+
+Clippy.singleton_class.send(:include, Clippy::Linux)

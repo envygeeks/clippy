@@ -1,5 +1,5 @@
 class Clippy
-  class << self
+  class Windows
     def copy(data)
       if system("clip /? > NUL")
         begin
@@ -38,3 +38,5 @@ class Clippy
     end
   end
 end
+
+Clippy.singleton_class.send(:include, Clippy::Windows)
