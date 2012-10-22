@@ -10,7 +10,9 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
   * At least Windows Vista if you are on Windows.
 * Development:
   * Rake
+  * Pry
   * Minitest
+  * Simplecov
 
 ---
 Examples:
@@ -29,7 +31,7 @@ Clippy.paste and Clippy.clear
 ```
 
 <pre>
-Clippy v1.0.0 by Envygeeks
+Clippy v2.0.0 by EnvyGeeks
   --no-encoding   Encoding
   --paste         Paste
   --help          This
