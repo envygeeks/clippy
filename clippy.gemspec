@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.executables = ["clippy"]
   spec.add_development_dependency("minitest")
+  spec.add_development_dependency("pry")
   spec.add_development_dependency("rake")
   spec.authors = ["Jordon Bedwell"]
   spec.email = ["jordon@envygeeks.com"]
