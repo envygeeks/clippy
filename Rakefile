@@ -4,9 +4,9 @@ require "rake/testtask"
 task :default => [:test]
 task :spec => :test
 
-Rake::TestTask.new do |tfile|
-  tfile.verbose = true
-  tfile.pattern = "tests/**/*.rb"
+Rake::TestTask.new do |test|
+  test.verbose = true
+  test.pattern = "test/**/*.rb"
 end
 
 Gem::PackageTask.new(eval(IO.read("clippy.gemspec"))) do |pkg|
