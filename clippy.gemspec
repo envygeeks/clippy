@@ -1,11 +1,11 @@
 $:.unshift(File.expand_path("../lib", __FILE__))
-require "clippy"
+require "clippy/version"
 
 Gem::Specification.new do |spec|
   spec.license = "MIT"
   spec.name = "clippy"
   spec.has_rdoc = false
-  spec.version = Clippy.version
+  spec.version = Clippy::VERSION
   spec.require_paths = ["lib"]
   spec.executables = ["clippy"]
   spec.add_development_dependency("minitest")
