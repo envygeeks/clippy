@@ -246,7 +246,7 @@ class Clippy
       else
         bad_status = false
         statuses.each do |status|
-          if (status.is_a?(Process::Status) && status.success?) || status == 0
+          if (status.is_a?(Process::Status) && !status.success?) || status == 0
             bad_status = true
           end
         end
