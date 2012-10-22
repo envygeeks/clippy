@@ -1,6 +1,6 @@
 class Clippy
+  VERSION = "2.0.0"
   class << self
-    VERSION = "2.0.0"
     def version
       VERSION
     end
