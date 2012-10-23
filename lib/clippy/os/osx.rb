@@ -1,5 +1,5 @@
 class Clippy
-  class OSX
+  module OSX
     def copy(data)
       data = data.to_s unless data.is_a?(String)
       data.gsub!(/\n/, "\r\n")
