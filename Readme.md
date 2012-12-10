@@ -29,7 +29,7 @@ Clippy.paste and Clippy.clear
 ```
 
 <pre>
-Clippy v1.0.0 by Envygeeks
+Clippy v1.0.1 by Envygeeks
   --no-encoding   Encoding
   --paste         Paste
   --help          This

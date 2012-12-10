@@ -27,7 +27,7 @@ class Clippy
   end
 
   class << self
-    VERSION = "1.0.0"
+    VERSION = "1.0.1"
     def version
       VERSION
     end
@@ -169,7 +169,7 @@ class Clippy
           when binary_exist?("pbpaste")
             data = ""
 
-            Open3.popen("pbpaste") { |_, stdout, _|
+            Open3.popen3("pbpaste") { |_, stdout, _|
               data = stdout.read || "" }
 
           ##
