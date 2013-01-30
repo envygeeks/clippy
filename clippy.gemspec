@@ -1,8 +1,8 @@
 $:.unshift(File.expand_path("../lib", __FILE__))
-require "clippy"
+require "clippy/version"
 
 Gem::Specification.new do |spec|
-  spec.version = Clippy.version
+  spec.version = Clippy::VERSION
   spec.license = "MIT"
   spec.name = "clippy"
   spec.has_rdoc = false
@@ -11,10 +11,9 @@ Gem::Specification.new do |spec|
   spec.executables = ["clippy"]
   spec.authors = ["Jordon Bedwell"]
   spec.email = ["jordon@envygeeks.com"]
-  spec.add_development_dependency("pry")
-  spec.add_development_dependency("rake")
-  spec.add_development_dependency("minitest")
   spec.homepage = "https://github.com/envygeeks/clippy"
+  spec.add_development_dependency("rake", "~> 10.0.3")
+  spec.add_development_dependency("minitest", "~> 3.3.0")
   spec.summary = "A utility to access the systems clipboard."
   spec.description = "A utility to access the systems clipboard."
 

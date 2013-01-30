@@ -7,7 +7,7 @@ require "clippy"
 do_return = nil
 did_cmd = nil
 OptionParser.new do |opts|
-  opts.banner = "Clippy v#{Clippy.version} by Envygeeks"
+  opts.banner = "Clippy v#{Clippy::VERSION} by Envygeeks"
   opts.on("--no-encoding", "Encoding") { Clippy.encode = false }
   opts.on("--paste", "Paste") { do_return = Clippy.paste }
   opts.on("--help", "This") { do_return = opts }
@@ -23,7 +23,7 @@ OptionParser.new do |opts|
     did_cmd = Clippy.copy(text)
   end
 
-  opts.on("--version", "version") { do_return = Clippy.version }
+  opts.on("--version", "version") { do_return = Clippy::VERSION }
 end.parse!
 
 if do_return.nil? and did_cmd.nil?

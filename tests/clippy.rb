@@ -6,7 +6,7 @@ require "clippy"
 
 describe Clippy do subject { Clippy }
   it "must have a proper version" do
-    Clippy.version.split(".").delete_if { |val|
+    Clippy::VERSION.split(".").delete_if { |val|
       val =~ /pre\d+/ }.length.must_equal(3)
   end
 

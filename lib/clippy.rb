@@ -1,3 +1,4 @@
+require "clippy/version"
 require "rbconfig"
 
 if RbConfig::CONFIG["host_os"] !~ /mswin|mingw32/
@@ -8,13 +9,8 @@ else
 end
 
 class Object
-  ##
-  # ---
-  # Hood jacked from Rails.
-  ##
-
   def blank?
-    (respond_to?(:empty?)) ? (empty?) : (!self)
+    (respond_to?(:empty?)) ? empty? : !self
   end
 end
 
@@ -27,16 +23,6 @@ class Clippy
   end
 
   class << self
-    VERSION = "1.0.1"
-    def version
-      VERSION
-    end
-
-    ##
-    # ---
-    # Doesn't work on Windows.
-    ##
-
     def binary_exist?(bin = nil)
       if bin
         system("which #{bin} > /dev/null 2>&1")
@@ -50,12 +36,6 @@ class Clippy
     end
 
     def copy(data)
-      ##
-      # ---
-      # Always convert to a string and convert \n to \r\n because shit like
-      # Pidgin, Empathy, aMSN and other fucking clients have no idea what the
-      # hell \n is for, that or they just ignore it like jackasses, jackasses.
-
       data = data.to_s unless data.is_a?(String)
       data.gsub!(/\n/, "\r\n")
 
@@ -75,11 +55,6 @@ class Clippy
       else
         status = 0
         case true
-          ##
-          # ---
-          # xsel is a Linux utility.
-          # apt-get install xsel.
-
           when binary_exist?("xsel")
             ["-p", "-b", "-s"].each do |opt|
               Open3.popen3("xsel -i #{opt}") do |stdin, _, _, thread|
@@ -89,24 +64,12 @@ class Clippy
               end
             end
 
-          ##
-          # ---
-          # pbpaste is for Mac's though it could change.
-          # I don't know if it has multiple-boards.
-          ##
-
           when binary_exist?("pbcopy")
             Open3.popen3("pbcopy") do |stdin, _, _, thread|
               stdin << data
               stdin.close
               status = thread.value
             end
-
-          ##
-          # ---
-          # xclip is a Linux utitily.
-          # apt-get install xclip.
-          ##
 
           when binary_exist?("xclip")
             ["primary", "secondary", "clipboard"].each do |opt|
@@ -143,11 +106,6 @@ class Clippy
         Win32API.new("user32", "CloseClipboard", [], "I").call
       else
         case true
-          ##
-          # ---
-          # xsel is a Linux utility.
-          # apt-get install xsel.
-
           when binary_exist?("xsel")
             cmd, data = "xsel -o", ""
 
@@ -160,23 +118,11 @@ class Clippy
             Open3.popen3(cmd) { |_, stdout, _|
               data = stdout.read }
 
-          ##
-          # ---
-          # pbpaste is for Mac's though it could change.
-          # I don't know if it has multiple-boards.
-          ##
-
           when binary_exist?("pbpaste")
             data = ""
 
             Open3.popen3("pbpaste") { |_, stdout, _|
               data = stdout.read || "" }
-
-          ##
-          # ---
-          # xclip is a Linux utitily.
-          # apt-get install xclip.
-          ##
 
           when binary_exist?("xclip")
             cmd, data = "xclip -o -selection", ""
