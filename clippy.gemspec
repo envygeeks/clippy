@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.email = ["jordon@envygeeks.com"]
   spec.homepage = "https://github.com/envygeeks/clippy"
   spec.add_development_dependency("rake", "~> 10.0.3")
-  spec.add_development_dependency("minitest", "~> 3.3.0")
+  spec.add_development_dependency("minitest", "~> 4.5")
   spec.summary = "A utility to access the systems clipboard."
   spec.description = "A utility to access the systems clipboard."
 
