@@ -11,7 +11,5 @@
 /tmp/**/*
 /log/**/*
 /**/*.gem
-/.ruby-version
-/.ruby_version
 /db/**/*.sqlite3
 
