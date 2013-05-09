@@ -5,11 +5,9 @@
 /bundle
 /.pryrc
 /.rvmrc
-/.ruby
 /pkg
 /.bundle
 /tmp/**/*
 /log/**/*
 /**/*.gem
-/db/**/*.sqlite3
 
