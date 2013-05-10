@@ -28,6 +28,7 @@ unless %W(no false).include?(ENV["COVERAGE"])
   end
 end
 
+require "securerandom"
 require "clippy"
 
 def get_clipboard_contents() out = ""
@@ -39,9 +40,9 @@ end
 
 def stub_binary(with = "xclip")
   clear_binary
-  Clippy.instance_variable_set(:@binary, with)
+  Clippy.send(:instance_variable_set, :@binary, with)
 end
 
 def clear_binary
-  Clippy.remove_instance_variable(:@binary) if Clippy.instance_variable_defined?(:@binary)
+  Clippy.send(:remove_instance_variable, :@binary) if Clippy.instance_variable_defined?(:@binary)
 end
