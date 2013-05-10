@@ -9,6 +9,8 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
   * Any OS X version that supports pbcopy.
   * At least Windows Vista if you are on Windows.
 
+*Right now there is a bug with jRuby that causes Clippy to fail, this bug is inside of Open3.popen3 where jRuby actually short-circuits and does not meet the same guidelines as Ruby1.9+, you can see the progress of this bug at: http://jira.codehaus.org/browse/JRUBY-6409*
+
 ---
 Examples:
 
