@@ -1,5 +1,5 @@
 before_install:
-  - "sudo apt-get install xclip --no-install-recommends --yes"
+  - "sudo apt-get install xclip xsel --no-install-recommends --yes"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 rvm:
