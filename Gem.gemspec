@@ -6,7 +6,6 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/envygeeks/clippy"
   spec.add_development_dependency("coveralls")
   spec.version = Clippy::VERSION
-  spec.add_dependency("popen4")
   spec.license = "MIT"
   spec.name = "clippy"
   spec.require_paths = ["lib"]
