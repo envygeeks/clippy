@@ -14,7 +14,10 @@ module Clippy module_function
   end
 
   CommandArgs = {
-    "windows" => "",
+    "windows" => {
+      "stdin" => "",
+      "stdout" => ""
+    },
     "xsel"=> {
       "stdin" => " -ib",
       "stdout" => " -ob"
