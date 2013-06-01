@@ -14,22 +14,10 @@ module Clippy module_function
   end
 
   CommandArgs = {
-    "windows" => {
-      "stdin" => "",
-      "stdout" => ""
-    },
-    "xsel"=> {
-      "stdin" => " -ib",
-      "stdout" => " -ob"
-    },
-    "pbcopy"=> {
-      "stdin"=> "",
-      "stdout"=> ""
-    },
-    "xclip"=> {
-      "stdin" => " -i -selection clipboard",
-      "stdout" => " -o -selection clipboard"
-    }
+    "xsel"=> { "stdin" => " -ib", "stdout" => " -ob" },
+    "windows" => { "stdin" => "", "stdout" => "" },
+    "pbcopy"=> { "stdin"=> "", "stdout"=> "" },
+    "xclip"=> { "stdin" => " -i -selection clipboard", "stdout" => " -o -selection clipboard" }
   }
 
   def windows?
