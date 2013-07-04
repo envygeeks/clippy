@@ -2,6 +2,8 @@ $:.unshift(File.expand_path("../lib", __FILE__))
 require "clippy/version"
 
 Gem::Specification.new do |spec|
+  spec.files = %W(Readme.md License Rakefile Gemfile) + Dir["lib/**/*"]
+  spec.description = "A utility to access the systems clipboard."
   spec.summary = "A utility to access the systems clipboard."
   spec.homepage = "https://github.com/envygeeks/clippy"
   spec.add_development_dependency("coveralls")
@@ -12,14 +14,17 @@ Gem::Specification.new do |spec|
   spec.executables = ["clippy"]
   spec.authors = ["Jordon Bedwell"]
   spec.email = ["envygeeks@gmail.com"]
-  spec.add_development_dependency("rake")
-  spec.add_development_dependency("simplecov")
-  spec.add_development_dependency("guard-rspec")
-  spec.add_development_dependency("luna-rspec-formatters")
-  spec.description = "A utility to access the systems clipboard."
-  spec.files = %W(Readme.md License Rakefile Gemfile) + Dir["lib/**/*"]
 
   if RUBY_PLATFORM =~ /mswin/
     spec.required_ruby_version = ">= 1.9.1"
   end
+
+  # --------------------------------------------------------------------------
+  # Dependencies.
+  # --------------------------------------------------------------------------
+
+  spec.add_development_dependency('rspec', '~> 2.14.0')
+  spec.add_development_dependency('rake', '~> 10.1.0')
+  spec.add_development_dependency('coveralls', '~> 0.6.7')
+  spec.add_development_dependency('luna-rspec-formatters', '>= 0.0.1')
 end
