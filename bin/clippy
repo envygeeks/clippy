@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.expand_path("../../lib", __FILE__))
-require "optparse"
-require "clippy"
+require_relative '../lib/clippy'
+require 'optparse'
 
 OptionParser.new do |opts|
   opts.banner = "Clippy v#{Clippy::VERSION}: Clippy [--copy [< File] ['Text']]"
