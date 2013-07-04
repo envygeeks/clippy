@@ -24,7 +24,5 @@ Gem::Specification.new do |spec|
   # --------------------------------------------------------------------------
 
   spec.add_development_dependency('rspec', '~> 2.13.0')
-  spec.add_development_dependency('rake', '~> 10.1.0')
-  spec.add_development_dependency('coveralls', '~> 0.6.7')
   spec.add_development_dependency('luna-rspec-formatters', '>= 0.0.1')
 end
