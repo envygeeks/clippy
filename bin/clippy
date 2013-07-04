@@ -6,13 +6,13 @@ require 'optparse'
 OptionParser.new do |opts|
   opts.banner = "Clippy v#{Clippy::VERSION}: Clippy [--copy [< File] ['Text']]"
 
-  opts.on("--paste", "Paste") { $stdout.puts Clippy.paste }
-  opts.on("--help", "This") { $stdout.puts opts }
-  opts.on("--clear", "Clear") { exit Clippy.clear ? 0 : 1 }
-  opts.on("--version", "Version") { $stdout.puts Clippy::VERSION }
+  opts.on('--paste', 'Paste') { $stdout.puts Clippy.paste }
+  opts.on('--help', 'This') { $stdout.puts opts }
+  opts.on('--clear', 'Clear') { exit Clippy.clear ? 0 : 1 }
+  opts.on('--version', 'Version') { $stdout.puts Clippy::VERSION }
 
-  opts.on("--copy", "Copy a String or STDIN") do
-    ($stdout.puts "More than one arg is not allowable" and exit 1) if ARGV.count > 1
+  opts.on('--copy', 'Copy a String or STDIN') do
+    ($stdout.puts 'More than one arg is not allowable' and exit 1) if ARGV.count > 1
     exit Clippy.copy(ARGV.count == 0 ? ARGF.readlines.join : ARGV.first.dup) ? 0 : 1
   end
 end.parse!
