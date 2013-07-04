@@ -16,5 +16,4 @@ branches:
     - master
 matrix:
   allow_failures:
-    - rvm: jruby-head
     - rvm: jruby-19mode
