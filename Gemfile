@@ -3,6 +3,7 @@ gemspec
 
 group :development do
   gem 'envygeeks-coveralls', :github => 'envygeeks/envygeeks-coveralls'
+  gem 'luna-rspec-formatters', '>= 0.0.1'
   gem 'rake', '~> 10.1.0'
 
   unless ENV['CI']
