@@ -4,10 +4,9 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 
 ---
 * Requirements:
-  * Any Linux distro with xsel or xclip.
-  * Ruby1.9+, Ruby2.0+ or JRuby in 1.9+
-  * Any OS X version that supports pbcopy.
-  * At least Windows Vista if you are on Windows.
+  * Windows: `clip`
+  * OS X: `pbcopy`
+  * Linux: `xsel` || `xclip`
 
 *Right now there is a bug with jRuby stable that causes Clippy to fail, this bug is inside of Open3.popen3 where jRuby actually short-circuits and does not meet the same guidelines as Ruby1.9+, you can see the progress of this bug at: http://jira.codehaus.org/browse/JRUBY-6409 -- this has been fixed in jRuby-head so if you plan to use Clippy please use jRuby-head until a new stable is released.*
 
@@ -15,10 +14,10 @@ Clippy is a  cross-platform clipboard utility and script for Ruby.
 Examples:
 
 ```bash
-clippy --copy "#1"
+clippy --copy '#1'
 clippy --paste
-echo "#2" |clippy --copy
-clippy --copy < "file#3.txt"
+echo '#2' |clippy --copy
+clippy --copy < 'file#3.txt'
 ```
 
 ```ruby
