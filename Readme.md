@@ -27,7 +27,7 @@ Clippy.paste and Clippy.clear
 ```
 
 ```
-Clippy v2.0.0: Clippy [--copy [< File] ['Text']]
+Clippy v2.0.7: Clippy [--copy [< File] ['Text']]
   --paste    Paste
   --help     This
   --clear    Clear
