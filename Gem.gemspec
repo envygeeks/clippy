@@ -14,13 +14,9 @@ Gem::Specification.new do |spec|
   spec.authors = ["Jordon Bedwell"]
   spec.email = ["envygeeks@gmail.com"]
 
-  if RUBY_PLATFORM =~ /mswin/
-    spec.required_ruby_version = ">= 1.9.1"
-  end
-
   # --------------------------------------------------------------------------
   # Dependencies.
   # --------------------------------------------------------------------------
 
-  spec.add_development_dependency('rspec', '~> 2.14')
+  spec.add_development_dependency("rspec", "~> 2.14")
 end

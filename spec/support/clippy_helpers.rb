@@ -1,7 +1,7 @@
 module RSpec
   module Helpers
     module ClippyHelpers
-      def stub_binary(with = 'xclip')
+      def stub_binary(with = "xclip")
       clear_binary
         Clippy.send(:instance_variable_set, :@binary, with)
       end
@@ -13,8 +13,8 @@ module RSpec
       end
 
       def get_clipboard_contents
-      out = ''
-        Open3.popen3('xclip -o -selection clipboard') do |stdin, stdout, stderr, pid|
+      out = ""
+        Open3.popen3("xclip -o -selection clipboard") do |stdin, stdout, stderr, pid|
           out = stdout.read.strip
         end
       out

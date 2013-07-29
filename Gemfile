@@ -1,9 +1,12 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 gemspec
 
 group :development do
-  gem 'luna-rspec-formatters'
-  gem 'rake'
-  gem 'pry'
-  gem 'envygeeks-coveralls', :github => 'envygeeks/envygeeks-coveralls'
+  unless ENV["CI"]
+    gem "pry"
+  end
+
+  gem "rake"
+  gem "envygeeks-coveralls"
+  gem "luna-rspec-formatters"
 end
