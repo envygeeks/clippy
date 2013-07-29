@@ -16,7 +16,7 @@ group :development do
   # Stuff we don't want on the CI.
   # --------------------------------------------------------------------------
 
-  unless ENV['CI']
+  unless ENV['CI'] || ENV['SKIP_GUARD']
     gem 'guard-rspec'
     gem 'listen', :github => 'envygeeks/listen'
   end
