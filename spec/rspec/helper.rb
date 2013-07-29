@@ -1,5 +1,5 @@
 require_relative '../support/simplecov'
-require_relative '../support/format'
+require 'luna/rspec/formatters/checks'
 require 'securerandom'
 require 'clippy'
 
