@@ -7,6 +7,4 @@ group :development do
   end
 
   gem "rake"
-  gem "envygeeks-coveralls"
-  gem "luna-rspec-formatters"
 end
