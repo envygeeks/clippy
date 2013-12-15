@@ -12,7 +12,7 @@ OptionParser.new do |opts|
   opts.on("--version", "Version") { $stdout.puts Clippy::VERSION }
 
   opts.on("--copy", "Copy a String or STDIN") do
-    ($stdout.puts "More than one arg is not allowable" and exit 1) if ARGV.count > 1
+    ($stderr.puts "More than one arg is not allowable" and exit 1) if ARGV.count > 1
     exit Clippy.copy(ARGV.count == 0 ? ARGF.readlines.join : ARGV.first.dup) ? 0 : 1
   end
 end.parse!
