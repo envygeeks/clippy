@@ -40,7 +40,8 @@ module Clippy module_function
   end
 
   def copy(data)
-    run_command("stdin", $/ != "\r\n" ? data.to_s.gsub($/, "\r\n") : data)[0] == 0 ? true : false
+    data = data.to_s.gsub($/, "\r\n") if $/ != "\r\n"
+    rtrn = run_command("stdin", data)[0] == 0 ? true : false
   end
 
   def paste
@@ -73,15 +74,15 @@ module Clippy module_function
   end
 
   def run_command(type, data = '')
-    stdin, stdout, stderr, pid = Open3.popen3(binary + COMMAND_ARGS[binary][type])
-    type == "stdin" ? stdin.puts(data) : out = stdout.read.strip
+    i, o, e, p = Open3.popen3(binary + COMMAND_ARGS[binary][type])
+    type == "stdin" ? i.puts(data) : out = o.read.strip
 
-    [stdin, stdout, stderr].each do |m|
+    [i, o, e].each do |m|
       m.close
     end
 
     [
-      pid.value,
+      p.value,
       type == "stdin" ? data : out
     ]
   end
