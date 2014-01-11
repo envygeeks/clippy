@@ -14,8 +14,8 @@ module RSpec
 
       def get_clipboard_contents
       out = ""
-        Open3.popen3("xclip -o -selection clipboard") do |stdin, stdout, stderr, pid|
-          out = stdout.read.strip
+        Open3.popen3("xclip -o -selection clipboard") do |i, o, e, p|
+          out = o.read.strip
         end
       out
       end
