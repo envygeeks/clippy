@@ -39,7 +39,7 @@ describe "Clippy" do
           end
 
           def call(*args)
-            return args
+            args
           end
         end
       end
