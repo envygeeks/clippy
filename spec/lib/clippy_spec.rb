@@ -2,12 +2,12 @@ require "rspec/helper"
 
 shared_examples "Clippy" do
   it "can paste" do
-    expect(Clippy.copy(str = SecureRandom.hex)).to be_true
+    expect(Clippy.copy(str = SecureRandom.hex)).to eq true
     expect(Clippy.paste).to eq str
   end
 
   it "can copy" do
-    expect(Clippy.copy(str = SecureRandom.hex)).to be_true
+    expect(Clippy.copy(str = SecureRandom.hex)).to eq true
     expect(get_clipboard_contents).to eq str
   end
 
@@ -26,16 +26,16 @@ describe "Clippy" do
   end
 
   it "sends clip for Windows" do
-    Clippy.stub(:windows?).and_return(true)
+    allow(Clippy).to receive(:windows?).and_return true
     expect(Clippy.binary).to eq "clip"
   end
 
   describe "#paste" do
-    before :each do
-      unless Clippy.windows?
+    unless Clippy.windows?
+      before do
         class Win32API
           def initialize(*args)
-            # Mocked
+            nil
           end
 
           def call(*args)
@@ -45,15 +45,9 @@ describe "Clippy" do
       end
     end
 
-    after :each do
-      unless Clippy.windows?
-        Object.send(:const_remove, Win32API)
-      end
-    end
-
     it "calls Win32API for Windows" do
-      Win32API.should_receive(:new).exactly(3).times.and_call_original
-      Clippy.stub(:windows?).and_return(true)
+      expect(Win32API).to receive(:new).exactly(3).times.and_call_original
+      allow(Clippy).to receive(:windows?).and_return true
       Clippy.paste
     end
   end
@@ -73,20 +67,20 @@ describe "Clippy" do
     end
 
     it "gives xsel" do
-      Clippy.should_receive(:system).ordered.and_return(false)
-      Clippy.should_receive(:system).ordered.and_return(true)
+      expect(Clippy).to receive(:system).ordered.and_return(false)
+      expect(Clippy).to receive(:system).ordered.and_return(true )
       expect(Clippy.binary).to eq "xsel"
     end
 
     it "gives pbcopy on Mac" do
-      Clippy.should_receive(:system).twice.ordered.and_return(false)
-      Clippy.should_receive(:system).and_return(true)
+      expect(Clippy).to receive(:system).twice.ordered.and_return false
+      expect(Clippy).to receive(:system).and_return true
       expect(Clippy.binary).to eq "pbcopy"
     end
   end
 
   it "raises UnknownClipboardError if it can't find the binary" do
-    Clippy.stub(:system).and_return(false)
+    allow(Clippy).to receive(:system).and_return false
     expect { Clippy.binary }.to raise_error(Clippy::UnknownClipboardError)
   end
 end

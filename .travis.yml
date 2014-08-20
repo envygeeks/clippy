@@ -9,7 +9,7 @@ rvm:
   - jruby
 notifications:
   recipients:
-    - envygeeks@gmail.com
+    - jordon@envygeeks.com
 branches:
   only:
     - master
