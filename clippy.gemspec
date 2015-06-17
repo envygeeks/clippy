@@ -2,7 +2,7 @@ $:.unshift(File.expand_path("../lib", __FILE__))
 require "clippy/version"
 
 Gem::Specification.new do |spec|
-  spec.files = %W(Readme.md License Rakefile Gemfile) + Dir["lib/**/*"]
+  spec.files = %W(README.md LICENSE Rakefile Gemfile) + Dir["lib/**/*"]
   spec.description = "A utility to access the systems clipboard."
   spec.summary = "A utility to access the systems clipboard."
   spec.homepage = "https://github.com/envygeeks/clippy"
