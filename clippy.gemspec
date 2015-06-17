@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.description = "A utility to access the systems clipboard."
   spec.summary = "A utility to access the systems clipboard."
   spec.homepage = "https://github.com/envygeeks/clippy"
-  spec.email = ["jordon@envygeeks.com"]
+  spec.email = ["jordon@envygeeks.io"]
   spec.version = Clippy::VERSION
   spec.license = "MIT"
   spec.name = "clippy"
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.executables = ["clippy"]
   spec.authors = ["Jordon Bedwell"]
 
-  spec.add_development_dependency("rspec", "~> 3.0")
-  spec.add_development_dependency("envygeeks-coveralls", "~> 0.2")
-  spec.add_development_dependency("luna-rspec-formatters", "~> 1.2")
+  spec.add_development_dependency("rspec", "~> 3.3")
+  spec.add_development_dependency("envygeeks-coveralls", "~> 1.0")
+  spec.add_development_dependency("luna-rspec-formatters", "~> 3.3")
 end
