@@ -1,6 +1,7 @@
+sudo: true
 before_install:
-  - "sudo apt-get install xclip xsel --no-install-recommends --yes"
   - "export DISPLAY=:99.0"
+  - "sudo apt-get install xclip xsel --no-install-recommends --yes"
   - "sh -e /etc/init.d/xvfb start"
 rvm:
   - 2.0

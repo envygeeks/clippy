@@ -7,61 +7,71 @@ if RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 end
 
 module Clippy module_function
+  @unescape = true
+  class << self
+    attr_accessor :unescape
+  end
+
   class UnknownClipboardError < StandardError
     def initialize
       super "Unknown clipboard. Clippy requires xclip, xsel or pbcopy"
     end
   end
 
+  def unescape?
+    unescape
+  end
+
   COMMAND_ARGS = {
     "xsel" => {
-      "stdin" => " -ib",
-      "stdout" => " -ob"
-    },
+       "stdin".freeze => " -ib",
+      "stdout".freeze => " -ob"
+    }.freeze,
 
     "windows" => {
-      "stdin" => "",
-      "stdout" => ""
-    },
+       "stdin".freeze => "".freeze,
+      "stdout".freeze => "".freeze
+    }.freeze,
 
     "pbcopy" => {
-      "stdin" => "",
-      "stdout" => ""
-    },
+       "stdin".freeze => "".freeze,
+      "stdout".freeze => "".freeze
+    }.freeze,
 
     "xclip" => {
-      "stdin" => " -i -selection clipboard",
-      "stdout" => " -o -selection clipboard"
-    }
-  }
+       "stdin".freeze => " -i -selection clipboard",
+      "stdout".freeze => " -o -selection clipboard"
+    }.freeze
+  }.freeze
 
   def windows?
     RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
   end
 
   def copy(data)
+    data = unescape_newline(data) if unescape?
     data = data.to_s.gsub($/, "\r\n") if $/ != "\r\n"
-    rtrn = run_command("stdin", data)[0] == 0 ? true : false
+    run_command("stdin", data)[0] == 0 ? true : false
   end
 
   def paste
     if windows?
-      Win32API.new("user32", "OpenClipboard", "L", "I").call(0)
-        data = Win32API.new("user32", "GetClipboardData", "I", "P").call(1) || ""
-      Win32API.new("user32", "CloseClipboard", [], "I").call
+      Win32API.new("user32".freeze, "OpenClipboard", "L", "I").call(0)
+        Win32API.new("user32".freeze, "GetClipboardData", "I", "P").call(1) || "".freeze
+      Win32API.new("user32".freeze, "CloseClipboard", [], "I").call
     else
-      cmd = run_command("stdout")
+      cmd = run_command("stdout".freeze)
       cmd[0] == 0 ? ((cmd[1].nil? || cmd[1].empty?) ? nil : cmd[1]) : false
     end
   end
 
   def clear
-    (copy("").nil?) ? true : false
+    (copy("".freeze).nil?) ? true : false
   end
 
   def binary
     @binary ||= if windows?
-      "clip"
+      "clip".freeze
     else
       case true
         when system("which xclip > /dev/null 2>&1") then "xclip"
@@ -73,9 +83,9 @@ module Clippy module_function
     end
   end
 
-  def run_command(type, data = '')
+  def run_command(type, data = "")
     i, o, e, p = Open3.popen3(binary + COMMAND_ARGS[binary][type])
-    type == "stdin" ? i.puts(data) : out = o.read.strip
+    type == "stdin" ? i.print(data) : out = o.read.strip
 
     [i, o, e].each do |m|
       m.close
@@ -85,5 +95,9 @@ module Clippy module_function
       p.value,
       type == "stdin" ? data : out
     ]
+  end
+
+  def unescape_newline(data)
+    data.gsub(/\\n/, "\n").gsub(/\\r/, "\r")
   end
 end
