@@ -9,9 +9,9 @@ group :test do
 end
 
 group :development do
-  gem "pry"
-  gem "luna-rspec-formatters"
-  gem "rspec-rails"
-  gem "travis"
-  gem "rspec"
+  gem "pry", :require => false
+  gem "travis", :require => false
+  gem "luna-rspec-formatters", :require => false
+  gem "luna-rubocop-formatters", :require => false
+  gem "rspec", :require => false
 end

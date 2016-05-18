@@ -1,3 +1,4 @@
+require "luna/rubocop/rake/task"
 require "rspec/core/rake_task"
 
 task :default => [:spec]
