@@ -74,7 +74,6 @@ module Clippy
   # --
   def copy(data)
     data = unescape_newline(data) if unescape?
-    data = data.to_s.gsub($RS, "\r\n") if $RS != "\r\n"
     out  = run_command("stdin", data)
     out [0] == 0 ? true : false
   end
