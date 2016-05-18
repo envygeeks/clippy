@@ -1,7 +1,14 @@
 Clippy is a  cross-platform clipboard utility and script for Ruby.
 
-[![Build Status](https://travis-ci.org/envygeeks/ruby-clippy.png?branch=master)](https://travis-ci.org/envygeeks/ruby-clippy) [![Coverage Status](https://coveralls.io/repos/envygeeks/ruby-clippy/badge.png?branch=master)](https://coveralls.io/r/envygeeks/ruby-clippy) [![Code Climate](https://codeclimate.com/github/envygeeks/ruby-clippy.png)](https://codeclimate.com/github/envygeeks/ruby-clippy) [![Dependency Status](https://gemnasium.com/envygeeks/ruby-clippy.png)](https://gemnasium.com/envygeeks/ruby-clippy)
+[![Build Status](https://travis-ci.org/envygeeks/clippy.svg?branch=master)][travis]
+[![Test Coverage](https://codeclimate.com/github/envygeeks/clippy/badges/coverage.svg)][coverage]
+[![Code Climate](https://codeclimate.com/github/envygeeks/clippy/badges/gpa.svg)][codeclimate]
+[![Dependency Status](https://gemnasium.com/envygeeks/clippy.svg)][gemnasium]
 
+[gemnasium]: https://gemnasium.com/envygeeks/clippy
+[codeclimate]: https://codeclimate.com/github/envygeeks/clippy
+[coverage]: https://codeclimate.com/github/envygeeks/clippy/coverage
+[travis]: https://travis-ci.org/envygeeks/clippy
 ---
 * Requirements:
   * Windows: `clip`
