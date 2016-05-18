@@ -1,4 +1,4 @@
-require_relative "../support/simplecov"
+require_relative "../support/coverage"
 require "luna/rspec/formatters/checks"
 require "clippy"
 

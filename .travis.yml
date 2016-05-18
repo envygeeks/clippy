@@ -3,13 +3,33 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sudo apt-get install xclip xsel --no-install-recommends --yes"
   - "sh -e /etc/init.d/xvfb start"
+
+#
+
 rvm:
-  - 2.0
   - 2.1
   - 2.2
+  - 2.3
+
+#
+
 notifications:
   recipients:
     - jordon@envygeeks.io
+
+#
+
 branches:
   only:
     - master
+
+#
+
+addons:
+  code_climate:
+    repo_token:
+      secure: "\
+        FS+X+GhN4U9tw6GB9OFImtBmQdqhW/FlmeM2xzFdMEYcidNpLn0aqg+JSP5zFyj9s7E2eUG\
+        sleoLqLZZQ+egUrpVCwM7aijPg9EtEtDPJbb/tx9psj3eDjS9/NiPUnBTSabVs5ho3/ycI+\
+        L1nu7eY7u5O8voNup+IKiJ2X8onbk=\
+      "
