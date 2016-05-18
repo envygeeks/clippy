@@ -58,6 +58,7 @@ Style/GuardClause:                    { Enabled: false }
 Style/FileName:                       { Enabled: false }
 Style/RedundantReturn:                { Enabled: false }
 Lint/UnusedMethodArgument:            { Enabled: false }
+Style/CaseIndentation:                { Enabled: false }
 
 AllCops:
   TargetRubyVersion: 2.0

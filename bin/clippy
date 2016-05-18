@@ -10,8 +10,7 @@ OptionParser.new do |opts|
   opts.on("-N", "--no-unescape", "Do not unescape \\n") { Clippy.unescape = false }
   opts.on("-v", "--version", "Version") { $stdout.puts Clippy::VERSION }
   opts.on("-C", "--clear", "Clear") { exit Clippy.clear ? 0 : 1 }
-
   opts.on("-c", "--copy [STR]", "Copy a String or STDIN") do |str|
-    exit (Clippy.copy(str || ARGF.readlines.join) ? 0 : 1)
+    exit Clippy.copy(str || ARGF.readlines.join) ? 0 : 1
   end
 end.parse!
